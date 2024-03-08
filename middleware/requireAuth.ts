@@ -1,28 +1,30 @@
-// import jwt from "jsonwebtoken"
-// import 'dotenv/config'
-// import User from "../models/userModel"
-// import { NextFunction, Request, Response } from "express"
+import jwt, { JwtPayload } from "jsonwebtoken"
+import 'dotenv/config'
+import User from "../models/userModel"
+import { NextFunction, Request, Response } from "express"
 
-// const requireAuth = async (req: Request, res: Response, next: NextFunction) => {
-//     const { authorization } = req.headers
-//     if (!authorization) {
-//         return res.status(401).json({ error: "auth token req" })
-//     }
-//     const token = authorization.split(' ')[1]
+const requireAuth = async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies.jwt
+    if (!token) {
+        return res.status(401).json({ error: "auth token req" })
+    }
 
-//     try {
-//         const { _id } = jwt.verify(token, process.env.SECRET!)
 
-//         req.user = await User.findOne({ _id }).select('_id')
-//         console.log("authorizesd")
-//         next()
+    try {
 
-//     } catch (error) {
-//         console.log(error)
-//         res.status(401).json({ error: "req not auth" })
-//     }
+        const verifiedToken = jwt.verify(token, process.env.SECRET!) as JwtPayload
+        const userId = verifiedToken._id
 
-// }
+        const user = await User.findOne({ _id: userId }).select('_id')
+        console.log("authorizesd")
+        next()
 
-// export default requireAuth
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ error: "req not auth" })
+    }
+
+}
+
+export default requireAuth
 

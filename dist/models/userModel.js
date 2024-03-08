@@ -50,7 +50,7 @@ userSchema.statics.register = function (email, password) {
         return user;
     });
 };
-// register static method
+// login static method
 userSchema.statics.login = function (email, password) {
     return __awaiter(this, void 0, void 0, function* () {
         // validation

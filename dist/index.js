@@ -15,7 +15,7 @@ const MONGODB_URI = process.env.MONGO_DB;
 const app = (0, express_1.default)();
 // middleware
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({ credentials: true, origin: 'http://localhost:5173' }));
 app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();

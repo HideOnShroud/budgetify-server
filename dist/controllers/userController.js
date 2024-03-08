@@ -26,7 +26,8 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield userModel_1.default.login(email, password);
         const token = createToken(user._id);
-        res.status(200).json({ email, token });
+        res.cookie('jwt', token, { httpOnly: true });
+        res.status(200).json({ email });
     }
     catch (error) {
         res.status(400).json({ error: error.message });
@@ -39,7 +40,8 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const user = yield userModel_1.default.register(email, password);
         const token = createToken(user._id);
-        res.status(200).json({ email, token });
+        res.cookie('jwt', token, { httpOnly: true });
+        res.status(200).json({ email });
     }
     catch (error) {
         res.status(400).json({ error: error.message });

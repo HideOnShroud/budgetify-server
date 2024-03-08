@@ -55,7 +55,7 @@ userSchema.statics.register = async function (email: string, password: string): 
 
 }
 
-// register static method
+// login static method
 
 userSchema.statics.login = async function (email: string, password: string): Promise<UserDocument> {
 

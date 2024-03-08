@@ -3,6 +3,8 @@ import express, { Express, NextFunction, Request, Response } from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import userRouter from "./routes/users"
+import requireAuth from './middleware/requireAuth'
+import cookieParser from 'cookie-parser'
 // import requireAuth from './middleware/requireAuth'
 
 
@@ -14,6 +16,7 @@ const app: Express = express()
 // middleware
 app.use(express.json());
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+app.use(cookieParser())
 app.use((req: Request, res: Response, next: NextFunction) => {
     console.log(req.path, req.method)
     next()
@@ -35,6 +38,7 @@ mongoose.connect(MONGODB_URI!)
         console.error("Error connecting to MongoDB:", error);
     });
 
+app.use(requireAuth)
 
 app.get("/", (req: Request, res: Response) => {
 

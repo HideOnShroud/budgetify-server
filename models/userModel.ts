@@ -88,4 +88,4 @@ userSchema.statics.login = async function (email: string, password: string): Pro
 
 const User = mongoose.model<UserDocument, UserModel>("User", userSchema);
 
-export default User;
+export { UserDocument, User };

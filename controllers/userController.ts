@@ -1,4 +1,4 @@
-import User from "../models/userModel"
+import { User } from "../models/userModel"
 import jwt from "jsonwebtoken"
 import { Request, Response } from "express";
 import 'dotenv/config'

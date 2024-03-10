@@ -19,6 +19,7 @@ const loginUser = async (req: Request, res: Response) => {
         const token = createToken(user._id)
 
         res.cookie('jwt', token, { httpOnly: true })
+        res.cookie('userId', user._id)
         res.status(200).json({ email })
     } catch (error: any) {
         res.status(400).json({ error: error.message })
@@ -36,6 +37,7 @@ const registerUser = async (req: Request, res: Response) => {
         const token = createToken(user._id)
 
         res.cookie('jwt', token, { httpOnly: true })
+        res.cookie('userId', user._id)
         res.status(200).json({ email })
     } catch (error: any) {
         res.status(400).json({ error: error.message })

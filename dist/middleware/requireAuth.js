@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require("dotenv/config");
-const userModel_1 = __importDefault(require("../models/userModel"));
+const userModel_1 = require("../models/userModel");
 const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.cookies.jwt;
     if (!token) {
@@ -23,7 +23,7 @@ const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     try {
         const verifiedToken = jsonwebtoken_1.default.verify(token, process.env.SECRET);
         const userId = verifiedToken._id;
-        const user = yield userModel_1.default.findOne({ _id: userId }).select('_id');
+        const user = yield userModel_1.User.findOne({ _id: userId }).select('_id');
         console.log("authorizesd");
         next();
     }

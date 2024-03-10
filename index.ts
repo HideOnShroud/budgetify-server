@@ -5,6 +5,7 @@ import cors from "cors"
 import userRouter from "./routes/users"
 import requireAuth from './middleware/requireAuth'
 import cookieParser from 'cookie-parser'
+import { User } from './models/userModel'
 // import requireAuth from './middleware/requireAuth'
 
 
@@ -40,10 +41,10 @@ mongoose.connect(MONGODB_URI!)
 
 app.use(requireAuth)
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", async (req, res) => {
+    const workouts = await User.find({}).sort({ createdAt: -1 })
 
-
-    res.send("HELLOs")
+    res.status(200).json(workouts)
 })
 
 app.listen(port, () => {

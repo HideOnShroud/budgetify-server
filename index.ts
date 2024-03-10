@@ -6,6 +6,7 @@ import userRouter from "./routes/users"
 import requireAuth from './middleware/requireAuth'
 import cookieParser from 'cookie-parser'
 import { User } from './models/userModel'
+import homeRouter from './routes/home'
 // import requireAuth from './middleware/requireAuth'
 
 
@@ -41,11 +42,13 @@ mongoose.connect(MONGODB_URI!)
 
 app.use(requireAuth)
 
-app.get("/", async (req, res) => {
-    const workouts = await User.find({}).sort({ createdAt: -1 })
+app.use('/api/', homeRouter)
 
-    res.status(200).json(workouts)
-})
+// app.get("/", async (req, res) => {
+//     const workouts = await User.find({}).sort({ createdAt: -1 })
+
+//     res.status(200).json(workouts)
+// })
 
 app.listen(port, () => {
     console.log('TEST')

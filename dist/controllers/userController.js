@@ -27,6 +27,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield userModel_1.User.login(email, password);
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true });
+        res.cookie('userId', user._id);
         res.status(200).json({ email });
     }
     catch (error) {
@@ -41,6 +42,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const user = yield userModel_1.User.register(email, password);
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true });
+        res.cookie('userId', user._id);
         res.status(200).json({ email });
     }
     catch (error) {

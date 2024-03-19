@@ -11,7 +11,7 @@ const users_1 = __importDefault(require("./routes/users"));
 const requireAuth_1 = __importDefault(require("./middleware/requireAuth"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const home_1 = __importDefault(require("./routes/home"));
-// import requireAuth from './middleware/requireAuth'
+const transactions_1 = __importDefault(require("./routes/transactions"));
 const secretKey = process.env.SECRET;
 const port = 6969;
 const MONGODB_URI = process.env.MONGO_DB;
@@ -38,7 +38,8 @@ mongoose_1.default.connect(MONGODB_URI)
     console.error("Error connecting to MongoDB:", error);
 });
 app.use(requireAuth_1.default);
-app.use('/api/', home_1.default);
+app.use('/api/transactions', transactions_1.default);
+app.use('/api', home_1.default);
 // app.get("/", async (req, res) => {
 //     const workouts = await User.find({}).sort({ createdAt: -1 })
 //     res.status(200).json(workouts)

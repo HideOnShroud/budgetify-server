@@ -8,6 +8,7 @@ const accountController_1 = require("../controllers/accountController");
 const homeRouter = express_1.default.Router();
 // GET Accounts
 homeRouter.get('/', accountController_1.getAccounts);
+homeRouter.get('/:id', accountController_1.getAccount);
 // POST Account
 homeRouter.post('/', accountController_1.createAccount);
 // DELETE Account

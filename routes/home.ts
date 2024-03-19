@@ -1,10 +1,12 @@
 import express from "express";
-import { createAccount, deleteAccount, getAccounts, updateAccount } from "../controllers/accountController";
+import { createAccount, deleteAccount, getAccounts, getAccount, updateAccount } from "../controllers/accountController";
 
 const homeRouter = express.Router()
 
 // GET Accounts
 homeRouter.get('/', getAccounts)
+
+homeRouter.get('/:id', getAccount)
 
 // POST Account
 homeRouter.post('/', createAccount)

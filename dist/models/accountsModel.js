@@ -28,14 +28,18 @@ const accountSchema = new Schema({
         type: String,
         required: false
     },
+    balance: {
+        type: String,
+        required: false
+    },
     userId: {
         type: String,
         required: true
     },
 });
-accountSchema.statics.createAccount = function (title, currency, description, userId) {
+accountSchema.statics.createAccount = function (title, currency, description, balance, userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield this.create({ title, currency, description, userId });
+        return yield this.create({ title, currency, description, balance, userId });
     });
 };
 const Account = mongoose_1.default.model("Account", accountSchema);

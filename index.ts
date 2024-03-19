@@ -7,7 +7,7 @@ import requireAuth from './middleware/requireAuth'
 import cookieParser from 'cookie-parser'
 import { User } from './models/userModel'
 import homeRouter from './routes/home'
-// import requireAuth from './middleware/requireAuth'
+import transactionRouter from './routes/transactions'
 
 
 const secretKey = process.env.SECRET
@@ -42,7 +42,9 @@ mongoose.connect(MONGODB_URI!)
 
 app.use(requireAuth)
 
-app.use('/api/', homeRouter)
+app.use('/api/transactions', transactionRouter)
+app.use('/api', homeRouter)
+
 
 // app.get("/", async (req, res) => {
 //     const workouts = await User.find({}).sort({ createdAt: -1 })

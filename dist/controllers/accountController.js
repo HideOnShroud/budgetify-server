@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateAccount = exports.deleteAccount = exports.getAccounts = exports.createAccount = void 0;
+exports.updateAccount = exports.deleteAccount = exports.getAccount = exports.getAccounts = exports.createAccount = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const accountsModel_1 = __importDefault(require("../models/accountsModel"));
 const getUserId = (req) => {
@@ -23,6 +23,8 @@ const createAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const { title, currency, description } = req.body;
     try {
         const account = yield accountsModel_1.default.createAccount(title, currency, description, getUserId(req));
+        res.cookie('accountId', account._id);
+        res.cookie('cur', account.currency);
         res.status(200).json(account);
     }
     catch (error) {
@@ -42,6 +44,21 @@ const getAccounts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getAccounts = getAccounts;
+// get Account
+const getAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "No Such Account" });
+    }
+    const account = yield accountsModel_1.default.findById(id);
+    if (!account) {
+        return res.status(404).json({ error: "No Such Account" });
+    }
+    res.cookie('accountId', account._id);
+    res.cookie('cur', account.currency);
+    res.status(200).json(account);
+});
+exports.getAccount = getAccount;
 // delete Account
 const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;

@@ -20,9 +20,9 @@ const getUserId = (req) => {
 };
 // create Account
 const createAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, currency, description } = req.body;
+    const { title, currency, description, balance } = req.body;
     try {
-        const account = yield accountsModel_1.default.createAccount(title, currency, description, getUserId(req));
+        const account = yield accountsModel_1.default.createAccount(title, currency, description, balance, getUserId(req));
         res.cookie('accountId', account._id);
         res.cookie('cur', account.currency);
         res.status(200).json(account);

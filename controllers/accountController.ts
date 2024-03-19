@@ -11,11 +11,11 @@ const getUserId = (req: Request) => {
 // create Account
 
 const createAccount = async (req: Request, res: Response) => {
-    const { title, currency, description } = req.body
+    const { title, currency, description, balance } = req.body
 
 
     try {
-        const account = await Account.createAccount(title, currency, description, getUserId(req))
+        const account = await Account.createAccount(title, currency, description, balance, getUserId(req))
         res.cookie('accountId', account._id)
         res.cookie('cur', account.currency)
         res.status(200).json(account)

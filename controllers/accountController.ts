@@ -15,7 +15,7 @@ const createAccount = async (req: Request, res: Response) => {
 
 
     try {
-        const account = await Account.createAccount(title, currency, description, balance, getUserId(req))
+        const account = await Account.createAccount(title, balance, currency, description, getUserId(req))
         res.cookie('accountId', account._id)
         res.cookie('cur', account.currency)
         res.status(200).json(account)

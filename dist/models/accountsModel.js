@@ -20,6 +20,10 @@ const accountSchema = new Schema({
         required: true,
         unique: false
     },
+    balance: {
+        type: String,
+        required: false
+    },
     currency: {
         type: String,
         required: false,
@@ -28,18 +32,14 @@ const accountSchema = new Schema({
         type: String,
         required: false
     },
-    balance: {
-        type: String,
-        required: false
-    },
     userId: {
         type: String,
         required: true
     },
 });
-accountSchema.statics.createAccount = function (title, currency, description, balance, userId) {
+accountSchema.statics.createAccount = function (title, balance, currency, description, userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield this.create({ title, currency, description, balance, userId });
+        return yield this.create({ title, balance, currency, description, userId });
     });
 };
 const Account = mongoose_1.default.model("Account", accountSchema);
